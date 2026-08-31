@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: test  # 指定使用 test 环境
     steps:
       - uses: actions/checkout@v4
 
