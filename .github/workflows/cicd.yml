@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: test  # 指定使用 test 环境
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.3
+
       - uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -16,7 +22,7 @@ jobs:
           cache-dependency-path: ./pnpm-lock.yaml
 
       - run: |
-          # pnpm config set registry https://registry.npmmirror.com
+          pnpm config set registry https://registry.npmmirror.com
           pnpm install --frozen-lockfile
 
       - name: Build
@@ -29,5 +35,5 @@ jobs:
           ARGS: "-rlgoDzvc -i"
           REMOTE_HOST: ${{ vars.REMOTE_HOST }}
           REMOTE_USER: ${{ vars.REMOTE_USER }}
-          SOURCE: ./dist
+          SOURCE: ./dist/
           TARGET: ${{ vars.TARGET }}
