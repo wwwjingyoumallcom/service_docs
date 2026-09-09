@@ -50,7 +50,7 @@
             @click="openLightbox(step, j)"
             :aria-label="(isEn ? 'View ' : '查看 ') + img.alt"
           >
-            <img :src="img.src" :alt="img.alt" loading="lazy" decoding="async" />
+            <img :src="withBase(img.src)" :alt="img.alt" loading="lazy" decoding="async" />
           </button>
         </div>
       </div>
@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { computed, ref, defineAsyncComponent } from 'vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 // 灯箱异步加载 — 用户点击图片才弹出,不占首屏
 const ImageLightbox = defineAsyncComponent(() => import('./ImageLightbox.vue'))
 
@@ -253,7 +253,7 @@ const lightboxAlt = computed(() => lightboxImages.value[lightboxIndex.value]?.al
 const lightboxTotal = computed(() => lightboxImages.value.length)
 
 const openLightbox = (step: Step, index: number) => {
-  lightboxImages.value = step.images
+  lightboxImages.value = step.images.map((img) => ({ ...img, src: withBase(img.src) }))
   lightboxIndex.value = index
   lightboxVisible.value = true
 }

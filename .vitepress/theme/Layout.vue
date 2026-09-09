@@ -5,10 +5,20 @@ import DefaultTheme from 'vitepress/theme'
 import FooterNav from '../components/FooterNav.vue'
 
 const { lang } = useData()
+const { site } = useData()
 const route = useRoute()
 
 /** 跳到主要内容 — 多语言 */
 const skipText = computed(() => (lang.value === 'en' ? 'Skip to main content' : '跳到主要内容'))
+
+/** 去掉部署 base 前缀(如 /docs),得到站点相对路径,便于判断页面类型 */
+function withoutBase(path: string): string {
+  const base = site.value.base
+  if (base && base !== '/' && path.startsWith(base)) {
+    return '/' + path.slice(base.length)
+  }
+  return path
+}
 
 /**
  * FooterNav 按页面类型差异化展示:
@@ -21,9 +31,9 @@ type FooterMode = 'full' | 'minimal'
 const footerMode = computed<FooterMode | null>(() => {
   // VitePress route.path 实际带 .html 后缀(与 link 里的相对路径不同)
   // 兼容处理:用 endsWith + 根路径白名单
-  const p = route.path
-  if (p === '/' || p === '/en/' || p === '/en' || p === '/en/index.html') return 'full'
-  if (p.endsWith('/about/about.html')) return 'minimal'
+  const p = withoutBase(route.path)
+  if (p === '/' || p === '/en/' || p === '/en' || p === '/en/index' || p === '/en/index.html') return 'full'
+  if (p.endsWith('/about/about') || p.endsWith('/about/about.html')) return 'minimal'
   return null
 })
 </script>

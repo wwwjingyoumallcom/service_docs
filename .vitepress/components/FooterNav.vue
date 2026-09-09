@@ -27,7 +27,7 @@
         <ul class="fn-link-list">
           <li v-for="link in col.links" :key="link.name">
             <a
-              :href="link.href"
+              :href="withBase(link.href)"
               :target="link.href.startsWith('http') ? '_blank' : undefined"
               rel="noopener noreferrer"
               class="fn-link"
@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 
 type FooterMode = 'full' | 'minimal'
 

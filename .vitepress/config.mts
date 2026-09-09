@@ -58,7 +58,7 @@ const enGuideSidebar = [
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: '/',
+  base: '/docs/',
   title: 'FastApiAdmin',
   description: '基于 FastAPI + Vue3 + TypeScript 构建的企业级中后台解决方案,AI 驱动的全栈开发平台。',
   srcDir: 'src',

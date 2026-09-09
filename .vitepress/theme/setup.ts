@@ -4,12 +4,7 @@
  * - 移除 VitePress 默认注入的 Inter Web 字体 preload(我们用 system-ui 优先)
  */
 import { onMounted, onUnmounted, watch, nextTick } from 'vue'
-import { useRoute } from 'vitepress'
-
-/** 仅在 guide/ 路径下启用图片缩放(首页用不上,避免 ~60KB 浪费) */
-function isGuidePath(path: string): boolean {
-  return path.includes('/guide/') || path.startsWith('/en/guide/')
-}
+import { useData, useRoute } from 'vitepress'
 
 /** 移除 VitePress 默认注入的 Inter Web 字体 preload(我们用 system-ui 优先) */
 function removeInterPreloads(): void {
@@ -32,6 +27,22 @@ function removeInterPreloads(): void {
 /** 挂载时初始化 guide 图片缩放与字体清理 */
 export function setupPageEnhance(): void {
   const route = useRoute()
+  const { site } = useData()
+
+  /** 去掉部署 base 前缀(如 /docs),得到站点相对路径,便于判断页面类型 */
+  function withoutBase(path: string): string {
+    const base = site.value.base
+    if (base && base !== '/' && path.startsWith(base)) {
+      return '/' + path.slice(base.length)
+    }
+    return path
+  }
+
+  /** 仅在 guide/ 路径下启用图片缩放(首页用不上,避免 ~60KB 浪费) */
+  function isGuidePath(path: string): boolean {
+    const p = withoutBase(path)
+    return p.startsWith('/guide/') || p.startsWith('/en/guide/')
+  }
   let zoom: { detach: () => void } | null = null
   let zoomLoading = false
 

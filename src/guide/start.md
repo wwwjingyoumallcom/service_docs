@@ -7,7 +7,7 @@ description: "15-30 分钟跑通一个可演示的 MVP:环境准备、代码拉�
 
 ## 🍪 演示环境
 
-- 官网：[https://service.fastapiadmin.com](https://service.fastapiadmin.com)
+- 官网：[https://service.fastapiadmin.com/docs](https://service.fastapiadmin.com/docs)
 - Web 端：[https://service.fastapiadmin.com/web](https://service.fastapiadmin.com/web)
 - 移动端：[https://service.fastapiadmin.com/app](https://service.fastapiadmin.com/app)
 - 演示账号：`admin` / `123456`（**仅限官方演示站使用，请勿用于生产环境**；首次部署后请立即修改默认密码）

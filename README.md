@@ -51,9 +51,36 @@ pnpm run build        # 构建文档工程
 
 构建产物在 `dist/` 下，可部署到 Nginx 等静态服务器。
 
+## Nginx配置
+```
+# 将 /docs 永久跳转到 /docs/，避免“不带斜杠”的请求匹配不到
+location = /docs {
+    return 301 /docs/;
+}
+
+# 站点文档目录：https://your-domain.com/docs/*  ->  /var/www/wwwroot/docs/*
+location ^~ /docs/ {
+    root /var/www/wwwroot;
+    index index.html;
+
+    # VitePress 生成的页面链接不带 .html，需要依次尝试：
+    # 原路径 -> 对应 .html -> 目录，都找不到再按 404 处理
+    try_files $uri $uri.html $uri/ =404;
+
+    # 未知页面展示 docs 自定义 404 页
+    error_page 404 /docs/404.html;
+
+    # 静态资源缓存（docs/assets 下是带 hash 的构建产物，可放心长缓存）
+    location ^~ /docs/assets/ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+}
+```
+
 ## 在线文档
 
-- 🌐 [https://service.fastapiadmin.com/](https://service.fastapiadmin.com/)
+- 🌐 [https://service.fastapiadmin.com/docs/](https://service.fastapiadmin.com/docs/)
 
 ## 文档编写规范
 

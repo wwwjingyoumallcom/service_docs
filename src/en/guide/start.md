@@ -7,7 +7,7 @@ description: "Spin up a working MVP in 15-30 minutes: prerequisites, source, Doc
 
 ## Demo Environment
 
-- Website: [https://service.fastapiadmin.com](https://service.fastapiadmin.com)
+- Website: [https://service.fastapiadmin.com/docs](https://service.fastapiadmin.com/docs)
 - Web: [https://service.fastapiadmin.com/web](https://service.fastapiadmin.com/web)
 - Mobile: [https://service.fastapiadmin.com/app](https://service.fastapiadmin.com/app)
 - Demo account: `admin` / `123456` (**for the official demo site only — do not use in production**; change the default password immediately after first deployment)

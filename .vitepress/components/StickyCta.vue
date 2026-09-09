@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, nextTick, onUnmounted } from 'vue'
-import { useData } from 'vitepress'
+import { useData, withBase } from 'vitepress'
 import { useStickyCtaVisibility } from '../composables/useStickyCtaVisibility'
 
 interface Props {
@@ -73,7 +73,7 @@ const t = computed(() => isEn.value
     }
 )
 
-const primaryHref = computed(() => isEn.value ? '/en/guide/start' : '/guide/start')
+const primaryHref = computed(() => withBase(isEn.value ? '/en/guide/start' : '/guide/start'))
 const secondaryHref = 'https://service.fastapiadmin.com/web'
 
 /**
