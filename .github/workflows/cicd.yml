@@ -22,7 +22,7 @@ jobs:
           cache-dependency-path: ./pnpm-lock.yaml
 
       - run: |
-          # pnpm config set registry https://registry.npmmirror.com
+          pnpm config set registry https://registry.npmmirror.com
           pnpm install --frozen-lockfile
 
       - name: Build
